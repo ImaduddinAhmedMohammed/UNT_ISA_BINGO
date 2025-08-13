@@ -1,0 +1,18 @@
+{
+  "name": "isa-bingo",
+  "version": "1.0.0",
+  "description": "Multiplayer Bingo game supporting 100+ simultaneous players",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "cors": "^2.8.5",
+    "uuid": "^9.0.0"
+  },
+  "keywords": ["bingo", "multiplayer", "game", "real-time"],
+  "author": "ISA Bingo",
+  "license": "MIT"
+}

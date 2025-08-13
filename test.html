@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ISA Bingo - Connection Test</title>
+</head>
+<body>
+    <h1>ISA Bingo - Connection Test</h1>
+    <div id="status">Connecting...</div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        
+        socket.on('connect', () => {
+            document.getElementById('status').textContent = 'Connected! Socket ID: ' + socket.id;
+            document.getElementById('status').style.color = 'green';
+        });
+        
+        socket.on('disconnect', () => {
+            document.getElementById('status').textContent = 'Disconnected';
+            document.getElementById('status').style.color = 'red';
+        });
+    </script>
+</body>
+</html>
