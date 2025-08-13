@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎃 ISA Bingo - Spooky Multiplayer Game 👻</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen active">
+        <div class="container">
+            <div class="logo">
+                <h1>🎃 ISA BINGO 👻</h1>
+                <p class="subtitle">ISA GAMES NIGHT</p>
+            </div>
+            
+            <div class="button-container">
+                <button id="hostBtn" class="btn btn-primary">
+                    <i class="fas fa-crown"></i>
+                    🎭 Host Game
+                </button>
+                <button id="joinBtn" class="btn btn-secondary">
+                    <i class="fas fa-users"></i>
+                    🕷️ Join Game
+                </button>
+            </div>
+   
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-envelope"></i>
+                    <span>indiastudentsassociation@unt.edu</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-instagram"></i>
+                    <span>isa.unt</span>
+                </div>
+                <!-- <div class="feature">
+                    <i class="fas fa-trophy"></i>
+                    <span>Competitive</span>
+                </div> -->
+            </div> 
+        </div>
+    </div>
+
+    <!-- Host Creation Screen -->
+    <div id="hostCreationScreen" class="screen">
+        <div class="host-creation-form">
+            <h2>🎭 Create New Game</h2>
+            <div class="form-group">
+                <label for="customRoomCode">Room Code (Optional):</label>
+                <input type="text" id="customRoomCode" placeholder="Enter custom room code (3-8 characters)" maxlength="8">
+                <small>Leave empty for auto-generated code</small>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="persistentMarking">
+                    <span class="checkmark"></span>
+                    Enable persistent marking (players can mark any called number)
+                </label>
+            </div>
+            <button id="createGameBtn" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                🎃 Create Game
+            </button>
+            <button id="backToHomeCreation" class="btn btn-outline">
+                <i class="fas fa-home"></i>
+                🏠 Back to Home
+            </button>
+        </div>
+    </div>
+
+    <!-- Host Screen -->
+    <div id="hostScreen" class="screen">
+        <div class="header">
+            <h2>🎭 Host Dashboard</h2>
+            <div class="room-info">
+                <span>Room Code: <strong id="roomCode"></strong></span>
+                <button id="copyCode" class="btn-small">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="host-content">
+            <div class="left-panel">
+                <div class="game-controls">
+                    <button id="startGameBtn" class="btn btn-success">
+                        <i class="fas fa-play"></i>
+                        🎮 Start Game
+                    </button>
+                    <button id="pauseGameBtn" class="btn btn-warning" style="display: none;">
+                        <i class="fas fa-pause"></i>
+                        ⏸️ Pause Game
+                    </button>
+                    <button id="resumeGameBtn" class="btn btn-info" style="display: none;">
+                        <i class="fas fa-play"></i>
+                        ▶️ Resume Game
+                    </button>
+                    <button id="callNumberBtn" class="btn btn-primary" disabled>
+                        <i class="fas fa-dice"></i>
+                        🎲 Call Number
+                    </button>
+                    <button id="endGameBtn" class="btn btn-danger" style="display: none;">
+                        <i class="fas fa-stop"></i>
+                        🛑 End Game
+                    </button>
+                    <button id="newGameBtn" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-redo"></i>
+                        🔄 New Game
+                    </button>
+                </div>
+                
+                <div class="game-status">
+                    <div id="gameStatus" class="status-indicator">
+                        <span class="status-text">Waiting for players...</span>
+                    </div>
+                </div>
+                
+                <div class="game-settings">
+                    <h3>🎛️ Game Settings</h3>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="persistentMarkingToggle">
+                        <span class="checkmark"></span>
+                        Persistent marking
+                    </label>
+                    <small>Players can mark any previously called number</small>
+                </div>
+                
+                <div class="current-number">
+                    <h3>🎲 Current Number</h3>
+                    <div id="currentNumber" class="number-display">-</div>
+                </div>
+                
+                <div class="called-numbers">
+                    <h3>📋 Called Numbers</h3>
+                    <div id="calledNumbers" class="numbers-grid"></div>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="players-list">
+                    <h3>👥 Players (<span id="playerCount">0</span>)</h3>
+                    <div id="playersList"></div>
+                </div>
+                
+                <div class="winners-list">
+                    <h3>🏆 Winners</h3>
+                    <div id="winnersList"></div>
+                </div>
+                
+                <div class="bingo-letters">
+                    <h3>🎯 BINGO Letters</h3>
+                    <div id="bingoLetters" class="bingo-letters-display"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button id="backToHomeHost" class="btn btn-outline">
+            <i class="fas fa-home"></i>
+            🏠 Back to Home
+        </button>
+    </div>
+
+    <!-- Join Screen -->
+    <div id="joinScreen" class="screen">
+        <div class="join-form">
+            <h2>🕷️ Join Game</h2>
+            <div class="form-group">
+                <label for="roomCodeInput">Room Code:</label>
+                <input type="text" id="roomCodeInput" placeholder="Enter room code" maxlength="8">
+            </div>
+            <div class="form-group">
+                <label for="playerNameInput">Your Name:</label>
+                <input type="text" id="playerNameInput" placeholder="Enter your name" maxlength="20">
+            </div>
+            <button id="joinGameBtn" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i>
+                🎃 Join Game
+            </button>
+            <button id="backToHomeJoin" class="btn btn-outline">
+                <i class="fas fa-home"></i>
+                🏠 Back to Home
+            </button>
+        </div>
+    </div>
+
+    <!-- Player Game Screen -->
+    <div id="playerScreen" class="screen">
+        <div class="player-header">
+            <h2>🎃 ISA BINGO 👻</h2>
+            <div class="player-info">
+                <span>Room: <strong id="playerRoomCode"></strong></span>
+                <span>Player: <strong id="playerName"></strong></span>
+            </div>
+            <div id="playerGameStatus" class="player-status">
+                <span class="status-text">Waiting for game to start...</span>
+            </div>
+        </div>
+        
+        <div class="game-content">
+            <div class="bingo-letters-player">
+                <div id="playerBingoLetters" class="bingo-letters-display"></div>
+            </div>
+            
+            <div class="bingo-card-container">
+                <div id="bingoCard" class="bingo-card"></div>
+            </div>
+            
+            <div class="game-info">
+                <div class="current-number-player">
+                    <h3>🎲 Current Number</h3>
+                    <div id="playerCurrentNumber" class="number-display">-</div>
+                </div>
+                
+                <div class="marked-numbers">
+                    <h3>✅ Marked Numbers</h3>
+                    <div id="markedNumbers" class="numbers-grid"></div>
+                </div>
+                
+                <div class="called-numbers-player">
+                    <h3>📋 Called Numbers</h3>
+                    <div id="playerCalledNumbers" class="numbers-grid"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button id="backToHomePlayer" class="btn btn-outline">
+            <i class="fas fa-home"></i>
+            🏠 Back to Home
+        </button>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen">
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>🕷️ Connecting...</p>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
